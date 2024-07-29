@@ -55,7 +55,7 @@ jobs:
         run: echo SERVER_PUBLIC_IP=${{ needs.deploy-infra.outputs.SERVER_PUBLIC_IP }} >> $GITHUB_ENV
       - name: Login to AWS ECR
         id: login-ecr
-        uses: aws-actions/amazon-ect-login@v1
+        uses: aws-actions/amazon-ecr-login@v1
       - name: Build, push docker image
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -70,7 +70,7 @@ jobs:
           REPOSITORY: example-node-app
           IMAGE_TAG: ${{ github.sha }}
           AWS_DEFAULT_REGION: sa-east-1
-        uses: appleboy/ssh-actions@master
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ env.SERVER_PUBLIC_IP }}
           username: ubuntu
