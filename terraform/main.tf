@@ -17,9 +17,9 @@ provider "aws" {
 resource "aws_instance" "server" {
   ami                    = "ami-01a38093d387a7497"
   instance_type          = "t2.micro"
-  key_name               = aws_key_pair.deployer.key_name
+  key_name               = aws_key_pair.deployerv2.key_name
   vpc_security_group_ids = [ aws_security_group.maingroup.id ]
-  iam_instance_profile   = aws_iam_instance_profile.ec2-profile-aws.name
+  iam_instance_profile   = aws_iam_instance_profile.ec2-profilev2.name
   connection {
     type        = "ssh"
     host        = self.public_ip
@@ -32,8 +32,8 @@ resource "aws_instance" "server" {
   }
 }
 
-resource "aws_iam_instance_profile" "ec2-profile-aws" {
-  name = "ec2-profile-aws"
+resource "aws_iam_instance_profile" "ec2-profilev2" {
+  name = "ec2-profilev2"
   role = "EC2-ECR-AUTH"
 }
 
@@ -77,7 +77,7 @@ resource "aws_security_group" "maingroup" {
    ]
 }
 
-resource "aws_key_pair" "deployer" {
+resource "aws_key_pair" "deployerv2" {
   key_name   = var.key_name
   public_key = var.public_key
 }
